@@ -41,7 +41,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let request = URLRequest(
             url: url!,
             cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData,
-            timeoutInterval: 10)
+            timeoutInterval: 100)
         let session = URLSession(
             configuration: URLSessionConfiguration.default,
             delegate: nil,
@@ -63,7 +63,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             // Hide HUD once the network request comes back (must be done on main UI thread)
                             MBProgressHUD.hide(for: self.view, animated: true)
                         }
-
                     }
                 }
             })
@@ -72,7 +71,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToDetailVC" {
-            //let dest = segue.destination as! DetailViewController
+            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+            let dest = segue.destination as! DetailViewController
+            dest.selectedMovie = arrMovie[(indexPath?.row)!]
         }
     }
     
@@ -90,7 +91,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let title = arrMovie[indexPath.row]["original_title"] as! String
         cell.name.text = title
-        let rating = arrMovie[indexPath.row]["vote_average"] as! Int
+        let rating = arrMovie[indexPath.row]["vote_average"] as! Float
         cell.rating.text = "Rating: " + String(rating)
         let overview = arrMovie[indexPath.row]["overview"] as! String
         cell.overview.text = overview
@@ -103,7 +104,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "segueToDetailVC", sender: self)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 

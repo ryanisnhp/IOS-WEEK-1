@@ -11,7 +11,8 @@ import UIKit
 class DetailViewController: UIViewController {
 
     // MARK: *** Local variables
-    
+    var selectedMovie: AnyObject?
+    let endPointPoster = "https://image.tmdb.org/t/p/w342"
     // MARK: *** Data Models
     
     // MARK: *** UI Elements
@@ -28,8 +29,18 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         let contentWidth = scrollView.bounds.width
-        let contentHeight = scrollView.bounds.height
+        let contentHeight = scrollView.bounds.height + 100
         scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
+        
+        loadData()
+    }
+    func loadData(){
+        filmTitle.text = selectedMovie?["original_title"] as? String
+        let rat = selectedMovie!["vote_average"] as! Float
+        rating.text = "Rating: " + String(rat)
+        fullOverview.text = selectedMovie?["overview"] as? String
+        let fullLinkImage = endPointPoster.appending((selectedMovie?["poster_path"] as? String)!)
+        imagePoster.setImageWith(URL(string: fullLinkImage)!)
     }
 
     override func didReceiveMemoryWarning() {
