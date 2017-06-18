@@ -29,7 +29,7 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
 
         let contentWidth = scrollView.bounds.width
-        let contentHeight = scrollView.bounds.height + 100
+        let contentHeight = scrollView.bounds.height + 150
         scrollView.contentSize = CGSize(width: contentWidth, height: contentHeight)
         
         loadData()

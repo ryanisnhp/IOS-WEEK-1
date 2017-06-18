@@ -10,23 +10,34 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating {
     
     // MARK: *** Local variables
     let refreshControl = UIRefreshControl()
+    let searchController = UISearchController(searchResultsController: nil)
     var arrMovie = [AnyObject]()
     let endPointPoster = "https://image.tmdb.org/t/p/w342"
+    var filteredArray = [AnyObject]()
     // MARK: *** Data Models
     
     // MARK: *** UI Elements
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     // MARK: *** UI Events
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshControl.addTarget(self, action: #selector(ViewController.fetchData), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+        
+        
         fetchData()
         
         tableView.delegate = self
@@ -73,7 +84,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if segue.identifier == "segueToDetailVC" {
             let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
             let dest = segue.destination as! DetailViewController
-            dest.selectedMovie = arrMovie[(indexPath?.row)!]
+            if searchController.isActive && searchController.searchBar.text != "" {
+                dest.selectedMovie = filteredArray[(indexPath?.row)!]
+            }else{
+                dest.selectedMovie = arrMovie[(indexPath?.row)!]
+            }
         }
     }
     
@@ -83,28 +98,71 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //return number of rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.arrMovie.count
+        if searchController.isActive && searchController.searchBar.text != "" {
+            return filteredArray.count
+        }else{
+            return self.arrMovie.count
+        }
     }
     //set data for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCellID") as! MovieCell
         
-        let title = arrMovie[indexPath.row]["original_title"] as! String
-        cell.name.text = title
-        let rating = arrMovie[indexPath.row]["vote_average"] as! Float
-        cell.rating.text = "Rating: " + String(rating)
-        let overview = arrMovie[indexPath.row]["overview"] as! String
-        cell.overview.text = overview
-        let releaseDate = arrMovie[indexPath.row]["release_date"] as! String
-        cell.releaseDate.text = releaseDate
-        let posterImage = arrMovie[indexPath.row]["poster_path"] as! String
-        let fullLinkImage = endPointPoster.appending(posterImage)
-        cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
+        if searchController.isActive && searchController.searchBar.text != "" {
+            let movie = filteredArray[indexPath.row]
+            let title = movie["original_title"] as! String
+            cell.name.text = title
+            let rating = movie["vote_average"] as! Float
+            cell.rating.text = "Rating: " + String(rating)
+            let overview = movie["overview"] as! String
+            cell.overview.text = overview
+            let releaseDate = movie["release_date"] as! String
+            cell.releaseDate.text = releaseDate
+            let posterImage = movie["poster_path"] as! String
+            let fullLinkImage = endPointPoster.appending(posterImage)
+            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
+
+        }else{
+            let title = arrMovie[indexPath.row]["original_title"] as! String
+            cell.name.text = title
+            let rating = arrMovie[indexPath.row]["vote_average"] as! Float
+            cell.rating.text = "Rating: " + String(rating)
+            let overview = arrMovie[indexPath.row]["overview"] as! String
+            cell.overview.text = overview
+            let releaseDate = arrMovie[indexPath.row]["release_date"] as! String
+            cell.releaseDate.text = releaseDate
+            let posterImage = arrMovie[indexPath.row]["poster_path"] as! String
+            let fullLinkImage = endPointPoster.appending(posterImage)
+            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
+        }
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    
+    func filterContentForSearch(searchString: String, forKey: String) {
+        filteredArray.removeAll()
+        if forKey == "name"{
+            for movie in arrMovie {
+                let copyMovie = movie
+                let temp = copyMovie["original_title"] as! String
+                if temp.lowercased().contains(searchString.lowercased()){
+                    filteredArray += [copyMovie]
+                }
+            }
+        }
+
+    }
+    
+
+    func updateSearchResults(for searchController: UISearchController) {
+        filterContentForSearch(searchString: searchController.searchBar.text!, forKey: "name")
+        tableView.reloadData()
+    }
+    
 }
+
 
