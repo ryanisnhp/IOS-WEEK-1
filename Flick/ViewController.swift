@@ -87,7 +87,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToDetailVC" {
-            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+            let indexPath = tableView.indexPathForSelectedRow
             let dest = segue.destination as! DetailViewController
             if searchController.isActive && searchController.searchBar.text != "" {
                 dest.selectedMovie = filteredArray[(indexPath?.row)!]
@@ -111,12 +111,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //set data for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCellID") as! MovieCell
+        let cell = Bundle.main.loadNibNamed("MoTableViewCell", owner: self, options: nil)?.first as! MoTableViewCell
         
         if searchController.isActive && searchController.searchBar.text != "" {
             let movie = filteredArray[indexPath.row]
             let title = movie["original_title"] as! String
-            cell.name.text = title
+            cell.title.text = title
             let rating = movie["vote_average"] as! Float
             cell.rating.text = "Rating: " + String(rating)
             let overview = movie["overview"] as! String
@@ -125,11 +125,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.releaseDate.text = releaseDate
             let posterImage = movie["poster_path"] as! String
             let fullLinkImage = endPointPoster.appending(posterImage)
-            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
-
+            cell.posterImage.setImageWith(URL(string: fullLinkImage)!)
+            
         }else{
             let title = arrMovie[indexPath.row]["original_title"] as! String
-            cell.name.text = title
+            cell.title.text = title
             let rating = arrMovie[indexPath.row]["vote_average"] as! Float
             cell.rating.text = "Rating: " + String(rating)
             let overview = arrMovie[indexPath.row]["overview"] as! String
@@ -138,12 +138,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.releaseDate.text = releaseDate
             let posterImage = arrMovie[indexPath.row]["poster_path"] as! String
             let fullLinkImage = endPointPoster.appending(posterImage)
-            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
+            cell.posterImage.setImageWith(URL(string: fullLinkImage)!)
         }
+
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "segueToDetailVC", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     

@@ -23,63 +23,16 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="sectionIndexBackgroundColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MovieCellID" rowHeight="239" id="fk5-1V-xA7" customClass="MovieCell" customModule="Flick" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="MovieListCellID" rowHeight="239" id="fk5-1V-xA7" customClass="MoTableViewCell" customModule="Flick" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="239"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fk5-1V-xA7" id="Ai7-rV-x5j">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="239"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <view contentMode="scaleToFill" misplaced="YES" id="fZS-uJ-RTl">
-                                                    <rect key="frame" x="8" y="8" width="304" height="225"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HpR-56-qFu">
-                                                            <rect key="frame" x="8" y="8" width="288" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <color key="textColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mVd-Ff-QYW">
-                                                            <rect key="frame" x="139" y="66" width="157" height="148"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
-                                                            <color key="textColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Release date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mri-wB-wKV">
-                                                            <rect key="frame" x="139" y="37" width="157" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Rating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SCr-nY-JCh">
-                                                            <rect key="frame" x="0.0" y="194" width="128" height="21"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <color key="textColor" red="0.97647058819999999" green="0.34901960780000002" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="TaP-9o-rrA">
-                                                            <rect key="frame" x="0.0" y="33" width="128" height="157"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" red="0.23137254900000001" green="0.3411764706" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                </view>
-                                            </subviews>
                                             <color key="backgroundColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
-                                            <outlet property="imgPoster" destination="TaP-9o-rrA" id="b5c-Wu-QEO"/>
-                                            <outlet property="name" destination="HpR-56-qFu" id="Vkm-jN-zmd"/>
-                                            <outlet property="overview" destination="mVd-Ff-QYW" id="3fp-Dv-UxY"/>
-                                            <outlet property="rating" destination="SCr-nY-JCh" id="G8z-15-gB1"/>
-                                            <outlet property="releaseDate" destination="mri-wB-wKV" id="xO8-Yu-8xe"/>
-                                            <outlet property="view" destination="fZS-uJ-RTl" id="Rcd-kr-I6Q"/>
                                             <segue destination="fW5-du-9fW" kind="push" identifier="segueToDetailVC" id="Mis-5l-ERu"/>
                                         </connections>
                                     </tableViewCell>
@@ -207,7 +160,7 @@
                                         <rect key="frame" x="0.0" y="28" width="320" height="236"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QNo-jR-JPQ" id="fwP-0s-xxm">
-                                            <rect key="frame" x="0.0" y="0.0" width="287" height="235.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="236"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <color key="backgroundColor" red="0.93725490199999995" green="0.87058823529999996" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </tableViewCellContentView>
