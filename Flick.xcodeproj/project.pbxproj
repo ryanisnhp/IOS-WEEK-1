@@ -13,6 +13,8 @@
 		8416ABCC1EF68EB400BBD58D /* TopRatedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8416ABCB1EF68EB400BBD58D /* TopRatedViewController.swift */; };
 		842249741EF6BC6900628B66 /* MoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842249721EF6BC6900628B66 /* MoTableViewCell.swift */; };
 		842249751EF6BC6900628B66 /* MoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842249731EF6BC6900628B66 /* MoTableViewCell.xib */; };
+		842249781EF7056500628B66 /* PosterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 842249761EF7056500628B66 /* PosterCollectionViewCell.swift */; };
+		842249791EF7056500628B66 /* PosterCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 842249771EF7056500628B66 /* PosterCollectionViewCell.xib */; };
 		84287DEC1EF018FA002EF340 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84287DEB1EF018FA002EF340 /* AppDelegate.swift */; };
 		84287DEE1EF018FA002EF340 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84287DED1EF018FA002EF340 /* ViewController.swift */; };
 		84287DF11EF018FA002EF340 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84287DEF1EF018FA002EF340 /* Main.storyboard */; };
@@ -30,6 +32,8 @@
 		8416ABCB1EF68EB400BBD58D /* TopRatedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRatedViewController.swift; sourceTree = "<group>"; };
 		842249721EF6BC6900628B66 /* MoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoTableViewCell.swift; sourceTree = "<group>"; };
 		842249731EF6BC6900628B66 /* MoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MoTableViewCell.xib; sourceTree = "<group>"; };
+		842249761EF7056500628B66 /* PosterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PosterCollectionViewCell.swift; sourceTree = "<group>"; };
+		842249771EF7056500628B66 /* PosterCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PosterCollectionViewCell.xib; sourceTree = "<group>"; };
 		84287DE81EF018F9002EF340 /* Flick.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flick.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84287DEB1EF018FA002EF340 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84287DED1EF018FA002EF340 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -127,6 +131,8 @@
 				840ECB4E1EF246F30054A9D7 /* DetailViewController.swift */,
 				8416ABCB1EF68EB400BBD58D /* TopRatedViewController.swift */,
 				842249721EF6BC6900628B66 /* MoTableViewCell.swift */,
+				842249761EF7056500628B66 /* PosterCollectionViewCell.swift */,
+				842249771EF7056500628B66 /* PosterCollectionViewCell.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -203,6 +209,7 @@
 			files = (
 				84287DF61EF018FA002EF340 /* LaunchScreen.storyboard in Resources */,
 				84287DF31EF018FA002EF340 /* Assets.xcassets in Resources */,
+				842249791EF7056500628B66 /* PosterCollectionViewCell.xib in Resources */,
 				84287DF11EF018FA002EF340 /* Main.storyboard in Resources */,
 				842249751EF6BC6900628B66 /* MoTableViewCell.xib in Resources */,
 			);
@@ -268,6 +275,7 @@
 				84287DEC1EF018FA002EF340 /* AppDelegate.swift in Sources */,
 				84287E011EF021AA002EF340 /* MovieCell.swift in Sources */,
 				840ECB4F1EF246F30054A9D7 /* DetailViewController.swift in Sources */,
+				842249781EF7056500628B66 /* PosterCollectionViewCell.swift in Sources */,
 				8416ABC21EF66E6000BBD58D /* ColorExtension.swift in Sources */,
 				842249741EF6BC6900628B66 /* MoTableViewCell.swift in Sources */,
 			);

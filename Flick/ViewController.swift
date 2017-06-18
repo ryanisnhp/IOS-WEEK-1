@@ -10,40 +10,63 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating ,UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     // MARK: *** Local variables
     let refreshControl = UIRefreshControl()
     let searchController = UISearchController(searchResultsController: nil)
+    let refreshControlCollection = UIRefreshControl()
+    let searchControllerCollection = UISearchController(searchResultsController: nil)
     var arrMovie = [AnyObject]()
     let endPointPoster = "https://image.tmdb.org/t/p/w342"
     var filteredArray = [AnyObject]()
+    var style = true
     // MARK: *** Data Models
     
     // MARK: *** UI Elements
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var alertConnection: UILabel!
     // MARK: *** UI Events
+    @IBAction func changeStyleButtonTapped(_ sender: Any) {
+        if style == true{
+            self.navigationItem.rightBarButtonItem?.image = UIImage(named: "list")
+            tableView.isHidden = true
+            collectionView.isHidden = false
+        }else{
+            self.navigationItem.rightBarButtonItem?.image = UIImage(named: "list")
+            tableView.isHidden = false
+            collectionView.isHidden = true
+        }
+        style = !style
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         alertConnection.isHidden = true
         refreshControl.addTarget(self, action: #selector(ViewController.fetchData), for: UIControlEvents.valueChanged)
+        refreshControlCollection.addTarget(self, action: #selector(ViewController.fetchData), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
         
+        collectionView.isHidden = true
+        collectionView.addSubview(refreshControlCollection)
         
         fetchData()
         
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        
     }
     
     func fetchData(){
@@ -72,8 +95,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                             MBProgressHUD.hide(for: self.view, animated: true)
                             self.alertConnection.isHidden = true
                             self.arrMovie = results
+                            self.collectionView.reloadData()
                             self.tableView.reloadData()
                             self.refreshControl.endRefreshing()
+                            self.refreshControlCollection.endRefreshing()
                         }
                     }
                 }
@@ -87,12 +112,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueToDetailVC" {
-            let indexPath = tableView.indexPathForSelectedRow
-            let dest = segue.destination as! DetailViewController
-            if searchController.isActive && searchController.searchBar.text != "" {
-                dest.selectedMovie = filteredArray[(indexPath?.row)!]
+            if style == true{
+                let indexPath = tableView.indexPathForSelectedRow
+                let dest = segue.destination as! DetailViewController
+                if searchController.isActive && searchController.searchBar.text != "" {
+                    dest.selectedMovie = filteredArray[(indexPath?.row)!]
+                }else{
+                    dest.selectedMovie = arrMovie[(indexPath?.row)!]
+                }
             }else{
-                dest.selectedMovie = arrMovie[(indexPath?.row)!]
+                let dest = segue.destination as! DetailViewController
+                dest.selectedMovie = arrMovie[selectedPoster]
             }
         }
     }
@@ -112,6 +142,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     //set data for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = Bundle.main.loadNibNamed("MoTableViewCell", owner: self, options: nil)?.first as! MoTableViewCell
+        // Use a red color when the user selects the cell
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(rgb: 0xCF4647)
+        cell.selectedBackgroundView = backgroundView
         
         if searchController.isActive && searchController.searchBar.text != "" {
             let movie = filteredArray[indexPath.row]
@@ -170,6 +204,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.reloadData()
     }
     
+    
+    
+    // MARK *** CollectionView
+    var selectedPoster = -1
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedPoster = indexPath.row
+        performSegue(withIdentifier: "segueToDetailVC", sender: self)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return arrMovie.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PosterCell", for: indexPath) as? PosterCollectionViewCell{
+            //set
+            let posterImage = arrMovie[indexPath.row]["poster_path"] as! String
+            let fullLinkImage = endPointPoster.appending(posterImage)
+            cell.posterImage.setImageWith(URL(string: fullLinkImage)!)
+            return cell
+        }else{
+            return UICollectionViewCell()
+        }
+        
+        
+    }
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = collectionView.superview?.frame.size.width
+        let imageWidth = width! * 0.285
+        return CGSize(width: imageWidth, height: imageWidth*1.4)
+    }
+
 }
 
 
