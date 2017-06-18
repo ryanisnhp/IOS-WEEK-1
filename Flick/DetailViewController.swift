@@ -12,7 +12,8 @@ class DetailViewController: UIViewController {
 
     // MARK: *** Local variables
     var selectedMovie: AnyObject?
-    let endPointPoster = "https://image.tmdb.org/t/p/w342"
+    let endPointLowResPoster = "https://image.tmdb.org/t/p/w45"
+    let endPointHighResPoster = "https://image.tmdb.org/t/p/w342"
     // MARK: *** Data Models
     
     // MARK: *** UI Elements
@@ -39,8 +40,9 @@ class DetailViewController: UIViewController {
         let rat = selectedMovie!["vote_average"] as! Float
         rating.text = "Rating: " + String(rat)
         fullOverview.text = selectedMovie?["overview"] as? String
-        let fullLinkImage = endPointPoster.appending((selectedMovie?["poster_path"] as? String)!)
+        let fullLinkImage = endPointHighResPoster.appending((selectedMovie?["poster_path"] as? String)!)
         imagePoster.setImageWith(URL(string: fullLinkImage)!)
+        
     }
 
     override func didReceiveMemoryWarning() {

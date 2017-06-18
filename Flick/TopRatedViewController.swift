@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  TopRatedViewController.swift
 //  Flick
 //
-//  Created by admin on 6/13/17.
+//  Created by admin on 6/18/17.
 //  Copyright © 2017 nhp. All rights reserved.
 //
 
@@ -10,8 +10,7 @@ import UIKit
 import AFNetworking
 import MBProgressHUD
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchResultsUpdating {
-    
+class TopRatedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,UISearchBarDelegate, UISearchResultsUpdating  {
     // MARK: *** Local variables
     let refreshControl = UIRefreshControl()
     let searchController = UISearchController(searchResultsController: nil)
@@ -23,14 +22,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // MARK: *** UI Elements
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var alert: UILabel!
     
-    @IBOutlet weak var alertConnection: UILabel!
     // MARK: *** UI Events
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        alertConnection.isHidden = true
+        alert.isHidden = true
         refreshControl.addTarget(self, action: #selector(ViewController.fetchData), for: UIControlEvents.valueChanged)
         tableView.addSubview(refreshControl)
         searchController.searchResultsUpdater = self
@@ -44,11 +43,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+
     }
     
     func fetchData(){
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
-        let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
+        let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(apiKey)")
         let request = URLRequest(
             url: url!,
             cachePolicy: NSURLRequest.CachePolicy.reloadIgnoringLocalCacheData,
@@ -70,7 +70,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if let results = responseDictionary["results"] as? [AnyObject] {
                             // Hide HUD once the network request comes back (must be done on main UI thread)
                             MBProgressHUD.hide(for: self.view, animated: true)
-                            self.alertConnection.isHidden = true
+                            self.alert.isHidden = true
                             self.arrMovie = results
                             self.tableView.reloadData()
                             self.refreshControl.endRefreshing()
@@ -79,15 +79,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
                 if error != nil{
                     MBProgressHUD.hide(for: self.view, animated: true)
-                    self.alertConnection.isHidden = false
+                    self.alert.isHidden = false
                 }
             })
         task.resume()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segueToDetailVC" {
-            let indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+        if segue.identifier == "segueToDetailVCCC" {
+            let indexPath = tableView.indexPathForSelectedRow
             let dest = segue.destination as! DetailViewController
             if searchController.isActive && searchController.searchBar.text != "" {
                 dest.selectedMovie = filteredArray[(indexPath?.row)!]
@@ -96,7 +96,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             }
         }
     }
-    
+
+
     // MARK: *** UITableView
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -111,12 +112,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     //set data for each row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCellID") as! MovieCell
+        let cell = Bundle.main.loadNibNamed("MoTableViewCell", owner: self, options: nil)?.first as! MoTableViewCell
         
         if searchController.isActive && searchController.searchBar.text != "" {
             let movie = filteredArray[indexPath.row]
             let title = movie["original_title"] as! String
-            cell.name.text = title
+            cell.title.text = title
             let rating = movie["vote_average"] as! Float
             cell.rating.text = "Rating: " + String(rating)
             let overview = movie["overview"] as! String
@@ -125,11 +126,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.releaseDate.text = releaseDate
             let posterImage = movie["poster_path"] as! String
             let fullLinkImage = endPointPoster.appending(posterImage)
-            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
-
+            cell.posterImage.setImageWith(URL(string: fullLinkImage)!)
+            
         }else{
             let title = arrMovie[indexPath.row]["original_title"] as! String
-            cell.name.text = title
+            cell.title.text = title
             let rating = arrMovie[indexPath.row]["vote_average"] as! Float
             cell.rating.text = "Rating: " + String(rating)
             let overview = arrMovie[indexPath.row]["overview"] as! String
@@ -138,12 +139,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.releaseDate.text = releaseDate
             let posterImage = arrMovie[indexPath.row]["poster_path"] as! String
             let fullLinkImage = endPointPoster.appending(posterImage)
-            cell.imgPoster.setImageWith(URL(string: fullLinkImage)!)
+            cell.posterImage.setImageWith(URL(string: fullLinkImage)!)
         }
         
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "segueToDetailVCCC", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -159,15 +161,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 }
             }
         }
-
+        
     }
     
-
+    
     func updateSearchResults(for searchController: UISearchController) {
         filterContentForSearch(searchString: searchController.searchBar.text!, forKey: "name")
         tableView.reloadData()
     }
     
+
+
+
 }
-
-
