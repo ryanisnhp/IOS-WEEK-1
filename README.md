@@ -35,6 +35,8 @@ Here's a walkthrough of implemented user stories:
 <img src='http://i.imgur.com/IkfbHFl.gif' title='Movie' width='300' alt='Video Walkthrough' />
 <img src='http://i.imgur.com/cNKMcuX.gif' title='Movie' width='300' alt='Video Walkthrough' />
 <img src='http://i.imgur.com/IA0k8C3.gif' title='Movie' width='300' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/ohqmyD5.gif' title='Movie' width='300' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/NqFdpUa.gif' title='Movie' width='300' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
