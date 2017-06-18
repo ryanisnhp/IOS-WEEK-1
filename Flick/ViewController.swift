@@ -8,10 +8,12 @@
 
 import UIKit
 import AFNetworking
+import MBProgressHUD
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: *** Local variables
+    let refreshControl = UIRefreshControl()
     var arrMovie = [AnyObject]()
     let endPointPoster = "https://image.tmdb.org/t/p/w342"
     // MARK: *** Data Models
@@ -23,7 +25,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        refreshControl.addTarget(self, action: #selector(ViewController.fetchData), for: UIControlEvents.valueChanged)
+        tableView.addSubview(refreshControl)
         fetchData()
         
         tableView.delegate = self
@@ -32,6 +35,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func fetchData(){
+        
         let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
         let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)")
         let request = URLRequest(
@@ -43,6 +47,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             delegate: nil,
             delegateQueue: OperationQueue.main
         )
+        // Display HUD right before the request is made
+        MBProgressHUD.showAdded(to: self.view, animated: true)
+        
         let task: URLSessionDataTask =
             session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
                 if let data = dataOrNil {
@@ -52,6 +59,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         if let results = responseDictionary["results"] as? [AnyObject] {
                             self.arrMovie = results
                             self.tableView.reloadData()
+                            self.refreshControl.endRefreshing()
+                            // Hide HUD once the network request comes back (must be done on main UI thread)
+                            MBProgressHUD.hide(for: self.view, animated: true)
                         }
 
                     }

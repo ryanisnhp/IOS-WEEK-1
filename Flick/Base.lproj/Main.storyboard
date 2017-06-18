@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--MOVIE-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Flick" customModuleProvider="target" sceneMemberID="viewController">
@@ -84,7 +84,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="5Wd-hg-3aF"/>
+                    <navigationItem key="navigationItem" title="MOVIE" id="5Wd-hg-3aF"/>
                     <connections>
                         <outlet property="tableView" destination="R6z-If-9av" id="BkC-CI-ACK"/>
                         <segue destination="fW5-du-9fW" kind="push" identifier="segueToDetailVC" id="xRE-tp-ulZ"/>
@@ -157,7 +157,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlI-Oi-wgL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2075" y="137"/>
+            <point key="canvasLocation" x="1777" y="137"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="3bW-k6-Nfq">
